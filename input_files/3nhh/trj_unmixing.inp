@@ -1,0 +1,38 @@
+* trajectory unmixing for replica exchange simulations
+*
+
+set prm_dir = ../../toppar_c36_jul21
+set wrk_dir   = .
+set out_dir   = .
+
+if @?itt     eq 0 set itt = 1
+if @?ncycles eq 0 set ncycles = 500
+if @?nrep    eq 0 set nrep    = 24
+
+bomblev -2
+read rtf  card name @{prm_dir}/top_all36_prot_hedi_xrliu.rtf
+read para card name @{prm_dir}/par_all36m_prot.prm flex
+stream @{prm_dir}/toppar_water_ions.str
+
+bomblev -1
+read psf  card name @{wrk_dir}/hybrid-solv.psf
+read coor pdb  name @{wrk_dir}/hybrid-solv.pdb resid
+bomblev 0
+
+set i    = 0
+set inpu = 10
+calc outu = @inpu + @nrep + 2
+label loop_inp_dcd
+      open read file unit @{inpu} name aa@{i}/dcd/@{name}_prod@{itt}.dcd
+      open writ file unit @{outu} name cond@{i}/dcd/@{name}_prod@{itt}.dcd
+      incr i    by 1
+      incr inpu by 1
+      incr outu by 1
+if i lt @nrep goto loop_inp_dcd
+
+open read card unit 8 name @{out_dir}/exchange-all-@{itt}.dat
+
+calc outu = 10 + @nrep + 2
+merge firstu 10 nunit @nrep outp @outu RTOTemp excu 8 NEXChange @ncycles nrpl @nrep nrep 1
+
+stop
