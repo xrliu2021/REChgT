@@ -1,8 +1,8 @@
 # Input files for 2D REChgT simulation of 3NHH
 
 Reference: 
-Enhanced Sampling of Buried Charges in Free Energy Calculations Using Replica Exchange with Charge Tempering
-Xiaorong Liu and Charles L. Brooks, III
+Enhanced Sampling of Buried Charges in Free Energy Calculations Using Replica Exchange with Charge Tempering.
+Xiaorong Liu and Charles L. Brooks, III.
 J. Chem. Theory Comput. 2024, 20, 3, 1051–1061
 
 ## File description
