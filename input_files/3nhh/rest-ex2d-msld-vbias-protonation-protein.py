@@ -529,6 +529,7 @@ def setup_nb(nb):
        ## this is also required. otherwise all BLaDE processes will use the same GPU device 
        #os.environ['CUDA_VISIBLE_DEVICES']=','.join(my_visible_devices)
        os.environ['CUDA_VISIBLE_DEVICES']=str(cuda_device_id)
+       lingo.charmm_script('energy')
        lingo.charmm_script('blade on')
     elif platform=='domdec':
        lingo.charmm_script('domdec gpu only dlb off ndir 1 1 1')
