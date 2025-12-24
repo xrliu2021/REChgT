@@ -528,7 +528,7 @@ def setup_nb(nb):
        #my_visible_devices=all_visible_devices[omp_num_threads*rank_loc:omp_num_threads*(rank+1)]
        ## this is also required. otherwise all BLaDE processes will use the same GPU device 
        #os.environ['CUDA_VISIBLE_DEVICES']=','.join(my_visible_devices)
-       os.environ['CUDA_VISIBLE_DEVICES']=str(cuda_device_id)
+       #os.environ['CUDA_VISIBLE_DEVICES']=str(cuda_device_id)
        lingo.charmm_script('energy')
        lingo.charmm_script('blade on')
     elif platform=='domdec':

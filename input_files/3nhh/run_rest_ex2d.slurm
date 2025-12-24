@@ -53,7 +53,12 @@ do
 
      if [ $finish -eq 0 ]; then
         echo "$comp $itt"
-        mpirun -np $np --quiet -x OMP_NUM_THREADS=1 python $fname.py $comp $itt $SLURM_NTASKS_PER_NODE
+        #mpirun -np $np --quiet -x OMP_NUM_THREADS=1 python $fname.py $comp $itt $SLURM_NTASKS_PER_NODE
+        mpirun -np $np --bind-to none -x OMP_NUM_THREADS=1 bash -c '
+export CUDA_VISIBLE_DEVICES=$OMPI_COMM_WORLD_LOCAL_RANK
+exec python $fname.py "$1" "$2" "$3"
+' _ "$comp" "$itt" "$SLURM_NTASKS_PER_NODE"
+
      fi
 
      for i in `seq 0 $(($np-1))`
